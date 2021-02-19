@@ -49,8 +49,8 @@ Window {
 
     Rectangle{
         id: root
-        width: 1500
-        height: 500
+        width: Screen.desktopAvailableWidth * 0.75
+        height: Screen.desktopAvailableHeight * 0.75
         anchors.centerIn: parent
         Text {
             id: txt1
@@ -381,12 +381,12 @@ Window {
             txtText.forceActiveFocus()
         }
     }
-
+    property int i: 0
     function upAndDown (){
         while (arrow.visible === true) {
-            imageRect.y = x
-            x = x + 0.1
-            if (x === 1)
+            imageRect.y = i
+            i = i + 1
+            if (x === 30)
                 x = x * (-1)
             return imageRect.y
         }
