@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+
+#___ MY ___
+
+/Build*
+*.user

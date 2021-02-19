@@ -87,15 +87,19 @@ Window {
                         width: offset
                         height: parent.height - offset
                         color: "gold"
-
-                        Image {
-                            id: arrow
-                            fillMode: Image.Tile
+                        Rectangle{
+                            id: imageRect
                             anchors.verticalCenter: parent.verticalCenter
                             anchors.horizontalCenter: parent.horizontalCenter
-                            visible: true
-                            source: "images/arrow.svg"
-                            Component.onCompleted: y = upAndDown ()
+                            Image {
+                                id: arrow
+                                fillMode: Image.Tile
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                visible: true
+                                source: "images/arrow.svg"
+                            }
+                            Component.onCompleted: imageRect.y = upAndDown ()
                         }
 
                         Rectangle{
@@ -106,7 +110,6 @@ Window {
                             x: parent.width * 0.5 - width * 0.5
                             y: parent.y + row2rect2.y + row2rect2.height - height
                             z: 999
-
 
                             TapHandler {
                                 acceptedPointerTypes: PointerDevice.GenericPointer | PointerDevice.Finger | PointerDevice.Pen
@@ -119,6 +122,9 @@ Window {
                                 anchors.fill: parent
                                 drag.target: parent
                                 onClicked: {
+                                    arrow.visible = false
+                                }
+                                onMouseXChanged: {
                                     arrow.visible = false
                                 }
                             }
@@ -282,11 +288,10 @@ Window {
 
                             // выбор цвета
 
-
                             TextField {
                                 anchors.centerIn: parent
                                 id: txtText
-                                text: qsTr("Ты можешь перетащить серый прямоугольник!")
+                                placeholderText: qsTr("Вводи текст!")
                                 width: 500
                                 font.pointSize: 12
 
@@ -366,9 +371,10 @@ Window {
         }
     }
     property bool flag: true
+
     function oneclick(){
         if(flag){
-            txtText.text = ""
+            txtText.placeholderText = ""
             txtText.forceActiveFocus()
             flag = false
         }else{
@@ -378,11 +384,11 @@ Window {
 
     function upAndDown (){
         while (arrow.visible === true) {
-            y = x
+            imageRect.y = x
             x = x + 0.1
             if (x === 1)
                 x = x * (-1)
-            return y
+            return imageRect.y
         }
     }
 }
