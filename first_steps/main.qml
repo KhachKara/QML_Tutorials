@@ -12,6 +12,8 @@ Window {
     maximumHeight: root.height
     minimumHeight: root.height
     visible: true
+    property alias dragAreaZ: dragArea.z
+    property alias dragAreaTransformOrigin: dragArea.transformOrigin
     title: qsTr("Hello World")
 
     property int offset: 100
@@ -51,6 +53,7 @@ Window {
         id: root
         width: Screen.desktopAvailableWidth * 0.75
         height: Screen.desktopAvailableHeight * 0.75
+
         anchors.centerIn: parent
         Text {
             id: txt1
@@ -89,17 +92,16 @@ Window {
                         color: "gold"
                         Rectangle{
                             id: imageRect
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.horizontalCenter: parent.horizontalCenter
+
                             Image {
                                 id: arrow
+                                x: 13
+                                y: 349
                                 fillMode: Image.Tile
-                                anchors.verticalCenter: parent.verticalCenter
-                                anchors.horizontalCenter: parent.horizontalCenter
+
                                 visible: true
                                 source: "images/arrow.svg"
                             }
-                            Component.onCompleted: imageRect.y = upAndDown ()
                         }
 
                         Rectangle{
@@ -108,7 +110,7 @@ Window {
                             height: space
                             color: "gray"
                             x: parent.width * 0.5 - width * 0.5
-                            y: parent.y + row2rect2.y + row2rect2.height - height
+                            y: parent.height - height - space
                             z: 999
 
                             TapHandler {
@@ -120,6 +122,7 @@ Window {
                             MouseArea {
                                 id: dragArea
                                 anchors.fill: parent
+                                z: 10
                                 drag.target: parent
                                 onClicked: {
                                     arrow.visible = false
@@ -392,3 +395,9 @@ Window {
         }
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;formeditorZoom:0.75;height:480;width:640}
+}
+##^##*/
